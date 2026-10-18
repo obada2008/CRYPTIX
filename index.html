@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CRYPTIX — Transform. Analyze. Understand.</title>
+<meta name="description" content="CRYPTIX: a local, browser-based toolkit for encoding, decoding, classical ciphers and hashing. Educational use only.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#workspace" data-i18n="skip"></a>
+<header class="topbar">
+  <button type="button" class="btn icon menu-btn" id="menuBtn" aria-controls="sidebar" aria-expanded="false" data-i18n-aria="menu">&#9776;</button>
+  <div class="brand">
+    <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 4 7v8c0 7.5 5 13 12 15 7-2 12-7.5 12-15V7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M11 16l4 4 7-8" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="wordmark">CRYPTIX</span>
+    <span class="tagline" data-i18n="tagline"></span>
+  </div>
+  <div class="top-actions">
+    <div class="seg" role="group" data-i18n-aria="lang.label">
+      <button type="button" id="langEn" lang="en" aria-pressed="true">English</button>
+      <button type="button" id="langAr" lang="ar" aria-pressed="false">العربية</button>
+    </div>
+    <button type="button" class="btn" id="themeBtn" aria-pressed="false"></button>
+    <button type="button" class="btn" id="fileBtn" data-i18n="vf.btn"></button>
+    <button type="button" class="btn" id="clearBtn" data-i18n="clear"></button>
+    <button type="button" class="btn" id="aboutBtn" data-i18n="about"></button>
+  </div>
+</header>
+
+<div class="shell">
+  <nav class="sidebar" id="sidebar" data-i18n-aria="nav.ops">
+    <label class="sr" for="search" data-i18n="search.label"></label>
+    <input type="search" id="search" data-i18n-ph="search.ph" autocomplete="off">
+    <p class="legend" data-i18n="recipe.hint"></p>
+    <div id="opList"></div>
+  </nav>
+
+  <main class="workspace" id="workspace" tabindex="-1">
+    <section aria-labelledby="s1">
+      <div class="recipe-head">
+        <h1 class="step-title" id="s1"><span class="n">1</span><span data-i18n="recipe.title"></span></h1>
+        <div class="toolbar">
+          <label class="chk"><input type="checkbox" id="autoChk" checked> <span data-i18n="tb.auto"></span></label>
+          <label class="chk"><input type="checkbox" id="lineChk"> <span data-i18n="tb.perline"></span></label>
+          <button type="button" class="btn sm" id="saveOpen" data-i18n="tb.save"></button>
+          <button type="button" class="btn sm" id="shareOpen" data-i18n="tb.share"></button>
+          <button type="button" class="btn sm" id="clearRecipe" data-i18n="tb.clear"></button>
+        </div>
+      </div>
+      <div class="steps" id="recipe"></div>
+    </section>
+
+    <div class="magic" id="magic" hidden>
+      <b data-i18n="magic.title"></b><span id="magicText"></span>
+      <button type="button" class="btn sm primary" id="magicBtn" data-i18n="magic.apply"></button>
+    </div>
+
+    <div class="panes">
+      <section class="pane" aria-labelledby="s2">
+        <div class="pane-head">
+          <h2 class="step-title" id="s2"><span class="n">2</span><span data-i18n="step.2"></span></h2>
+          <div class="mini">
+            <button type="button" class="btn sm" id="exBtn" data-i18n="ex.btn"></button>
+            <button type="button" class="btn sm" id="clearInBtn" data-i18n="clear.input"></button>
+          </div>
+        </div>
+        <label class="sr" for="input" data-i18n="input"></label>
+        <textarea id="input" dir="auto" spellcheck="false" autocomplete="off" autocapitalize="off" data-i18n-ph="ph.in"></textarea>
+        <div class="pane-foot"><span id="inMeta"></span></div>
+      </section>
+
+      <div class="mid">
+        <button type="button" class="btn primary big" id="runBtn"></button>
+        <button type="button" class="btn" id="swapBtn"><span class="ico" aria-hidden="true">&#8644;</span> <span data-i18n="swap"></span></button>
+        <span class="hint"><span data-i18n="shortcut"></span> <kbd id="kbd">Ctrl</kbd> + <kbd>Enter</kbd></span>
+      </div>
+
+      <section class="pane out" aria-labelledby="s3">
+        <div class="pane-head">
+          <h2 class="step-title" id="s3"><span class="n">3</span><span data-i18n="step.3"></span></h2>
+          <div class="mini">
+            <button type="button" class="btn sm" id="copyBtn" data-i18n="copy"></button>
+            <button type="button" class="btn sm" id="downloadBtn" data-i18n="download"></button>
+          </div>
+        </div>
+        <label class="sr" for="output" data-i18n="output"></label>
+        <textarea id="output" dir="auto" readonly spellcheck="false" data-i18n-ph="ph.out"></textarea>
+        <div class="pane-foot"><span id="outMeta"></span></div>
+      </section>
+    </div>
+    <p class="msg" id="msg" role="alert" hidden></p>
+  </main>
+</div>
+
+<footer class="status" role="status" aria-live="polite">
+  <span id="stOp"></span><span id="stMode"></span><span id="stIn"></span><span id="stOut"></span><span id="stState"></span>
+</footer>
+<div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+<dialog id="aboutDlg">
+  <h2 data-i18n="about.title"></h2>
+  <p data-i18n="about.p1"></p>
+  <ul><li data-i18n="about.l1"></li><li data-i18n="about.l2"></li><li data-i18n="about.l3"></li></ul>
+  <p data-i18n="about.p2"></p>
+  <form method="dialog"><button class="btn primary" type="submit" data-i18n="about.close"></button></form>
+</dialog>
+
+<dialog id="saveDlg">
+  <h2 data-i18n="save.title"></h2>
+  <p class="small" data-i18n="save.note"></p>
+  <div class="row"><label for="recipeName" data-i18n="save.name"></label><input type="text" id="recipeName" maxlength="60" autocomplete="off"><button type="button" class="btn primary" id="saveBtn" data-i18n="save.btn"></button></div>
+  <ul class="saved" id="savedList"></ul>
+  <form method="dialog"><button class="btn" type="submit" data-i18n="close"></button></form>
+</dialog>
+
+<dialog id="shareDlg">
+  <h2 data-i18n="share.title"></h2>
+  <label class="chk"><input type="checkbox" id="shareInput"> <span data-i18n="share.input"></span></label>
+  <p class="notice" data-i18n="share.warn"></p>
+  <label for="shareLink" data-i18n="share.link"></label>
+  <input type="text" id="shareLink" readonly dir="ltr">
+  <div class="row"><button type="button" class="btn primary" id="shareCopy" data-i18n="share.copy"></button></div>
+  <form method="dialog"><button class="btn" type="submit" data-i18n="close"></button></form>
+</dialog>
+
+<dialog id="fileDlg">
+  <h2 data-i18n="vf.title"></h2>
+  <p class="small" data-i18n="vf.note"></p>
+  <div class="drop" id="drop"><span data-i18n="vf.drop"></span><label class="btn" for="fileInput" data-i18n="vf.choose"></label><input type="file" id="fileInput" class="sr"></div>
+  <p id="fileName" class="small"></p>
+  <ul class="hashes" id="fileHashes" dir="ltr"></ul>
+  <label for="expected" data-i18n="vf.expected"></label>
+  <input type="text" id="expected" dir="ltr" autocomplete="off" spellcheck="false">
+  <p id="fileMatch" class="msg" role="status" hidden></p>
+  <form method="dialog"><button class="btn" type="submit" data-i18n="close"></button></form>
+</dialog>
+<script src="app.js"></script>
+<script src="learn.js"></script>
+<script src="assistant.js"></script>
+</body>
+</html>
