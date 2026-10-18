@@ -28,7 +28,7 @@ CRYPTIX is a web-based project for learning and applying encryption techniques u
 
 **Obada Khader**
 
-GitHub: [obada2008](https:// github.com/obada2008) 
+GitHub: [obada2008](https://github.com/obada2008) 
 
 ---
 
